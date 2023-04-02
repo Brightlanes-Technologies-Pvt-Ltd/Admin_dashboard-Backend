@@ -77,7 +77,7 @@ exports.changeRole = async (req, res) => {
     );
 
     if (!user) {
-      throw new Error("Cannot change the user role");
+      throw new Error("can not changed role of user");
     }
 
     res.status(200).json({
@@ -86,7 +86,7 @@ exports.changeRole = async (req, res) => {
       user,
     });
   } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ success: true, message: error.message });
   }
 };
 
