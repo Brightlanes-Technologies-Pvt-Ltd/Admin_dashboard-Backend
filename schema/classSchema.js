@@ -45,6 +45,14 @@ const classSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
 			ref: 'User'
+		},
+		deleted: {
+			type: Boolean,
+			default: false,
+			required: true
+		},
+		deletedAt: {
+			type: Date
 		}
 	},
 	{
