@@ -6,6 +6,8 @@ const app = express();
 
 const auth = require('./routes/auth');
 const classes = require('./routes/class');
+const teachers = require('./routes/teacher');
+const course = require('./routes/course');
 
 app.use(
 	cors({
@@ -31,5 +33,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', auth);
 app.use('/api/class', classes);
+app.use('/api/teacher', teachers);
+app.use('/api/course', course);
 
 module.exports = app;

@@ -1,6 +1,7 @@
 exports.customRole = (req, res, next) => {
 	try {
 		const { user } = req;
+
 		if (user.role !== 'admin') {
 			throw new Error('admin ascess only');
 		}

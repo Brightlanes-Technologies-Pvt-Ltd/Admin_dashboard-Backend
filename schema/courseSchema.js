@@ -1,21 +1,18 @@
 const mongoose = require('mongoose');
 
-const classSchema = new mongoose.Schema(
+const courseSchema = new mongoose.Schema(
 	{
-		className: {
+		courseName: {
 			type: String,
 			required: true
 		},
-		faculty: {
-			type: mongoose.Schema.Types.ObjectId,
-			required: true,
-			ref: 'User'
-		},
-		classOf: {
-			type: mongoose.Schema.ObjectId,
-			required: true,
-			ref: "Course"
-		},
+		faculities: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				required: true,
+				ref: 'Teacher'
+			}
+		],
 		startDate: {
 			type: Date,
 			required: true
@@ -24,15 +21,11 @@ const classSchema = new mongoose.Schema(
 			type: Date,
 			required: true
 		},
-		classHours: {
-			type: Number,
-			required: true
-		},
 		description: {
 			type: String,
 			required: true
 		},
-		category: {
+		subject: {
 			type: String,
 			required: true
 		},
@@ -41,11 +34,11 @@ const classSchema = new mongoose.Schema(
 			required: true,
 			default: 'Active'
 		},
-		agendas: [
-			{
-				type: String
-			}
-		],
+		enrolledStudents: {
+			type: Number,
+			require: true,
+			default: 0
+		},
 		created_by: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
@@ -64,4 +57,4 @@ const classSchema = new mongoose.Schema(
 		timestamps: true
 	}
 );
-module.exports = mongoose.model('Class', classSchema);
+module.exports = mongoose.model('Course', courseSchema);
