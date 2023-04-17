@@ -96,7 +96,8 @@ exports.createClassesFromCSV = async (req, res) => {
 				description: jsonArray[i].Description,
 				category: jsonArray[i].Category,
 				agendas: jsonArray[i].agendas.split(','),
-				created_by: user._id
+				created_by: user._id ,
+				classOf : jsonArray[i].course
 			});
 		}
 		const classes = await classModel.create(newArray);

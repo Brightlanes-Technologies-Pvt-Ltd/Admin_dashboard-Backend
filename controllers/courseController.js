@@ -74,6 +74,7 @@ exports.createCourseFromCSV = async (req, res) => {
 
     for (let i = 0; i < jsonArray.length; i++) {
       let teachers = [];
+      console.log(jsonArray[i].faculities.length);
       const faculities = jsonArray[i].faculities.split(",");
       for (let j = 0; j < faculities.length; j++) {
         const teacher = await teacherModel.findOne({

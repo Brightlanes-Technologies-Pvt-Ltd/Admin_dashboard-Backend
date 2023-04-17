@@ -20,7 +20,7 @@ classRouter
 	.route('/createfromcsv')
 	.post(isUserLoggedIn, customRole, createClassesFromCSV);
 
-classRouter.route('/').get(isUserLoggedIn, getAllClasses);
+classRouter.route('/').get(isUserLoggedIn, customRole ,  getAllClasses);
 
 classRouter.route('/update/:id').put(isUserLoggedIn, teacherUpdateClass);
 
