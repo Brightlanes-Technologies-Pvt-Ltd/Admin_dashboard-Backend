@@ -51,7 +51,16 @@ exports.signIn = async (req, res) => {
 	}
 };
 
-
+exports.logOut = async (req, res) => {
+	try {
+		res.status(200).cookie("token",null).json({success:true, message:"logout successfully"})
+	} catch (error) {
+		res.status(400).json({
+			success: false,
+			message: error.message
+		});
+	}
+}
 
 exports.changeRole = async (req, res) => {
 	try {

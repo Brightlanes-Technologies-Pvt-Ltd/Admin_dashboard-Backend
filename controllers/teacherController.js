@@ -1,79 +1,81 @@
-const teacherModel = require('../schema/teacherSchema');
-const bcrypt = require('bcryptjs');
-const { setCookies } = require('../utils/setCookies');
+const teacherModel = require("../schema/teacherSchema");
+const bcrypt = require("bcryptjs");
+const { setCookies } = require("../utils/setCookies");
 
 exports.signUp = async (req, res) => {
-	try {
-		const {
-			firstName,
-			lastName,
-			email,
-			password,
-			subject,
-			joiningDate,
-			mobileNumber
-		} = req.body;
-		const teacherExist = await teacherModel.findOne({ email });
-		if (teacherExist) {
-			throw new Error('Teacher Already exist');
-		}
-		const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirm_password,
+      subject,
+      joiningDate,
+      mobileNumber,
+    } = req.body;
+    if (confirm_password !== password)
+      throw new Error("Password & Confirm Password does not match");
+    const teacherExist = await teacherModel.findOne({ email });
+    if (teacherExist) {
+      throw new Error("Teacher Already exist");
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-		const newTeacher = new teacherModel({
-			firstName,
-			lastName,
-			email,
-			password,
-			subject,
-			joiningDate,
-			mobileNumber,
-			password: hashedPassword
-		});
-		const response = await teacherModel.create(newTeacher);
+    const newTeacher = new teacherModel({
+      firstName,
+      lastName,
+      email,
+      password,
+      subject,
+      joiningDate,
+      mobileNumber,
+      password: hashedPassword,
+    });
+    const response = await teacherModel.create(newTeacher);
 
-		setCookies(res, response, 'Account Created Successfully');
-	} catch (error) {
-		res.status(400).json({
-			success: false,
-			message: error.message
-		});
-	}
+    setCookies(res, response, "Account Created Successfully");
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
 exports.signIn = async (req, res) => {
-	try {
-		const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-		const teacher = await teacherModel.findOne({ email }).select('+password');
-		if (!teacher) {
-			throw new Error('Account does not exist ');
-		}
+    const teacher = await teacherModel.findOne({ email }).select("+password");
+    if (!teacher) {
+      throw new Error("Account does not exist ");
+    }
 
-		const matchPassword = await bcrypt.compare(password, teacher.password);
-		if (!matchPassword) {
-			throw new Error('Invalid Password');
-		}
-		teacher.password = undefined;
-		setCookies(res, teacher, `welcome ${teacher.firstName}`);
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({
-			success: false,
-			message: error.message
-		});
-	}
+    const matchPassword = await bcrypt.compare(password, teacher.password);
+    if (!matchPassword) {
+      throw new Error("Invalid Password");
+    }
+    teacher.password = undefined;
+    setCookies(res, teacher, `welcome ${teacher.firstName}`);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
-
 exports.getAllFaculty = async (req, res) => {
-	try {
-		const allFaculty = await teacherModel.find();
+  try {
+    const allFaculty = await teacherModel.find();
 
-		res.status(200).json({
-			success: true,
-			allFaculty
-		});
-	} catch (error) {
-		res.status(400).json({ success: true, message: error.message });
-	}
+    res.status(200).json({
+      success: true,
+      allFaculty,
+    });
+  } catch (error) {
+    res.status(400).json({ success: true, message: error.message });
+  }
 };
