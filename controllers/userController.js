@@ -51,18 +51,7 @@ exports.signIn = async (req, res) => {
 	}
 };
 
-exports.getAllFaculty = async (req, res) => {
-	try {
-		const allFaculty = await userModel.find({ role: 'teacher' });
 
-		res.status(200).json({
-			success: true,
-			allFaculty
-		});
-	} catch (error) {
-		res.status(400).json({ success: true, message: error.message });
-	}
-};
 
 exports.changeRole = async (req, res) => {
 	try {

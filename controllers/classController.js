@@ -1,5 +1,5 @@
 const classModel = require('../schema/classSchema');
-const userModel = require('../schema/teacherSchema');
+const teacherModel = require('../schema/teacherSchema');
 const csv = require('csvtojson');
 
 exports.createClass = async (req, res) => {
@@ -33,7 +33,7 @@ exports.createClass = async (req, res) => {
 // 		const { classes } = req.body;
 
 // 		for (let i = 0; i < classes.length; i++) {
-// 			let teacher = await userModel.findOne({ email: classes[i].faculty });
+// 			let teacher = await teacherModel.findOne({ email: classes[i].faculty });
 // 			if (!teacher) {
 // 				throw new Error(`${classes[i].faculty} does not exist`);
 // 			}
@@ -78,7 +78,7 @@ exports.createClassesFromCSV = async (req, res) => {
 		const newArray = [];
 
 		for (let i = 0; i < jsonArray.length; i++) {
-			let teacher = await userModel.findOne({ email: jsonArray[i].Faculty });
+			let teacher = await teacherModel.findOne({ email: jsonArray[i].Faculty });
 
 			if (!teacher) {
 				throw new Error(`${jsonArray[i].Faculty} does not exist`);
@@ -179,6 +179,15 @@ exports.getClassById = async (req, res) => {
 exports.getAllClassesOfAcourse = async (req, res) => {
 	try {
 		const classes = await classModel.find({ classOf: req.params.courseId });
+
+		res.status(200).json({ success: true, classes });
+	} catch (error) {
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+exports.getAllClassesOfATeacher = async (req, res) => {
+	try {
+		const classes = await classModel.find({ faculty: req.params.teacherId });
 
 		res.status(200).json({ success: true, classes });
 	} catch (error) {
