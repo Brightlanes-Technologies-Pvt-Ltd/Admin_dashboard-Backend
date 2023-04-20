@@ -32,5 +32,11 @@ const topicSchema = mongoose.Schema({
     required: true,
     default: false,
   },
+
+  completed:{
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 module.exports = mongoose.model("Topic", topicSchema);

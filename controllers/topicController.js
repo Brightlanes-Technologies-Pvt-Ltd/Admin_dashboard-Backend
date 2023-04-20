@@ -55,8 +55,8 @@ exports.updateTopics = async (req, res) => {
 
 exports.getASingleTopicById = async (req, res) => {
   try {
-    const data = await topicModel.findOne({ _id: req.params.id });
-    res.status(200).json({ success: true, data });
+    const TopicData = await topicModel.findOne({ _id: req.params.id });
+    res.status(200).json({ success: true, TopicData });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
