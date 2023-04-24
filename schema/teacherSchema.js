@@ -30,6 +30,11 @@ const teacherSchema = mongoose.Schema(
 			required: true,
 			default: new Date()
 		},
+		dateOfBirth: {
+			type: Date,
+			required: true,
+			default: new Date()
+		},
 		mobileNumber: {
 			type: Number,
 			required: true

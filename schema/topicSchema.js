@@ -11,7 +11,14 @@ const topicSchema = mongoose.Schema({
     required: true,
     ref: "Class",
   },
-
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
   aws: {
     type: Boolean,
     required: true,
@@ -33,10 +40,10 @@ const topicSchema = mongoose.Schema({
     default: false,
   },
 
-  completed:{
+  completed: {
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 });
 module.exports = mongoose.model("Topic", topicSchema);
