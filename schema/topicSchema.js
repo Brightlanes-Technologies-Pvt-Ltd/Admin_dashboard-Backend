@@ -19,10 +19,15 @@ const topicSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+
   aws: {
     type: Boolean,
     required: true,
     default: false,
+  },
+  topicHours: {
+    type: Number,
+    required: true,
   },
   materialDistributed: {
     type: Boolean,
